@@ -1,6 +1,9 @@
-import java.io.*;
-import java.net.*;
-
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+ 
 
 public class thread {
  
@@ -10,6 +13,9 @@ public class thread {
 	public Thread thread;
 	int ticket;
     String id;
+      InetAddress address = null;
+
+      byte[] ip = new byte[0];
     
 	public thread(){ // constructor
 		
@@ -67,6 +73,8 @@ public class thread {
          // byte[] sendData = new byte[1024];
           while(true)
              {
+        	  RawIPToString();
+        	  
         	  System.out.println("Server Leslie Lamport: Listening ...");
         	    DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
         	    socket.receive(receivePacket);
@@ -107,7 +115,78 @@ public class thread {
 	  		System.out.println("Mobile ID: " + id+ " con el Ticket : "+ticket+" esta usando el recurso");
 	  		
 	  	}
- 
- 
+	  	
+	  	
+	  //----------------------------------------------------------------------------------------------	  	
+	  //----------------------------------------------------------------------------------------------	
+	  //----------------------------------------------------------------------------------------------	
+	  		
+	  	
 
+	  	
+	  	public  String RawIPToString(){
+	  	  
+
+	  	        try {
+	  	            address = InetAddress.getLocalHost();
+	  	            ip = address.getAddress();
+	  	        } catch (UnknownHostException e) {
+	  	            e.printStackTrace();
+	  	        }
+
+	  	        String ipAddress =  getIpAddress(ip);
+	  	        System.out.println("IP Address Server = " + ipAddress);
+
+	  	        return ipAddress;
+	  	        
+	  	        /*
+	  	        try {
+	  	            address = InetAddress.getByName("google.com");
+	  	            ip = address.getAddress();
+	  	        } catch (UnknownHostException e) {
+	  	            e.printStackTrace();
+	  	        }
+	  	        ipAddress = getIpAddress(ip);
+	  	        System.out.println("IP Address = " + ipAddress);
+	  	        */
+	  	        
+	  	        
+	  	    }
+
+	  	    /**
+	  	     * Convert raw IP address to string.
+	  	     *
+	  	     * @param rawBytes raw IP address.
+	  	     * @return a string representation of the raw ip address.
+	  	     */
+	  	    public   String getIpAddress(byte[] rawBytes) {
+	  	        int i = 4;
+	  	        String ipAddress = "";
+	  	        for (byte raw : rawBytes)
+	  	        {
+	  	            ipAddress += (raw & 0xFF);
+	  	            if (--i > 0)
+	  	            {
+	  	                ipAddress += ".";
+	  	            }
+	  	        }
+
+	  	        return ipAddress;
+	  	    }
+	   
+	  	
+	  	
+	  	
+//----------------------------------------------------------------------------------------------	  	
+//----------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------	
+		
+		 
+
+	  	
+	  	
+	  	
 }
+
+ 
+ 
