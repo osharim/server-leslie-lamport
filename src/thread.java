@@ -90,15 +90,26 @@ public class thread {
                 ticket =  ticket +1;
                 String send_ticket = String.valueOf(ticket);
                 
+                //-------------------------------------------------------------------- Enviamos el numero del ticket al Mobile
+ 
+                System.out.println("Mobile ID: " + id+ " Tiene el Ticket : "+ticket);
+          
+                  
+                DatagramSocket datagramSocket = new DatagramSocket();
                 
                 byte[] sendData = send_ticket.getBytes();
+        
+                DatagramPacket packet = new DatagramPacket(	sendData, sendData.length, IPAddress, port);
                 
-                System.out.println("Mobile ID: " + id+ " Tiene el Ticket : "+ticket);
+                System.out.println("Mobile ID: " + id+ " la IP ES: "+IPAddress);
                 
+                datagramSocket.send(packet);
+ 
+                //---------------------------------------------------------------
+                
+            
                 Doing_something(); // recurso compartido
-                
-                DatagramPacket newTicket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-                socket.send(newTicket);
+          
                 
                 System.out.println("Mobile ID: " + id+ " con el Ticket : "+ticket+" Ha dejadoe el recurso..");
                 
